@@ -1,0 +1,19 @@
+{
+  "name": "jushi",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite --host ",
+    "build": "vite build",
+    "preview": "vite preview --port 4173"
+  },
+  "dependencies": {
+    "element-plus": "^2.2.13",
+    "sass": "^1.54.0",
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.0.1",
+    "vite": "^3.0.1"
+  }
+}

@@ -11,6 +11,7 @@
       <!--联系方式-->
       <div class="contact">
         <a target="_blank" :href="GitHubUrl"><i class="iconfont icon-github-fill"/></a>
+        <a  href="/login"><i class="iconfont icon-zhantingrukou"/></a>
         <a href="mailto: fruitboxs@outlook.com"><i class="iconfont icon-youxiang"/></a>
       </div>
 
@@ -59,23 +60,24 @@ body {
   color: #fff;
 }
 
-.main {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-}
+//.main {
+//  display: flex;
+//  align-items: center;
+//  justify-content: center;
+//  width: 100vw;
+//  height: 100vh;
+//}
 
 .Card-Info {
   //background-color: antiquewhite;
-  margin: 10px 0 10px;
+  margin: 0px 10px 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   font-family: 宋体;
   padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
   a {
     color: black;

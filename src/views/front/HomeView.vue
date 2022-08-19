@@ -6,9 +6,9 @@
       <div class="name flex">
         <!--        <el-avatar class="avatar" :size="150" :src="circleUrl"/>-->
         <div style="margin-top:30px">
-          <h1>居無何</h1>
+          <h1 >居無何</h1>
         </div>
-        <p>梦不会逃走，逃走的一直都是自己。</p>
+        <p  style="font-family: 汉仪瘦金书简; font-size: 2em">梦不会逃走，逃走的一直都是自己。</p>
       </div>
     </div>
 

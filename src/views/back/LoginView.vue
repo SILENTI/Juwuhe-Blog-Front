@@ -2,17 +2,17 @@
   <div class="main-login">
     <div class="login-from">
       <div class="login-logo">Login</div>
-      <div class="login-content">
-        <el-form  size="medium" :inline="true" ref="form" :model="form"  label-width="auto">
+      <div>
+        <el-form class="login-content" size="medium" :inline="true" ref="form" :model="form" label-width="0px">
           <el-form-item>
-            <el-input v-model="form.username"  placeholder="账号" type="text"></el-input>
+            <el-input v-model="form.username" placeholder="账号" type="text"></el-input>
           </el-form-item>
-          <el-form-item placeholder="密码">
+          <el-form-item>
             <el-input v-model="form.password" placeholder="密码" type="password"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">登录</el-button>
-          </el-form-item>`
+          </el-form-item>
         </el-form>
       </div>
     </div>
@@ -50,8 +50,8 @@ export default {
   justify-content: center;
 
   .login-from {
-    width: 400px;
-    height: 450px;
+    width: 350px;
+    height: 350px;
     background-color: white;
     border-radius: 10px;
     display: flex;
@@ -64,6 +64,17 @@ export default {
       margin: 8%;
       font-size: 6em;
       font-family: 汉仪瘦金书简;
+    }
+
+    .login-content {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+
+      div {
+        margin: 5px;
+      }
     }
 
   }

@@ -1,39 +1,85 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import HomeView from '../views/front/HomeView.vue'
-import Classification from "../views/front/ClassifyView.vue";
-import TagView from "../views/front/TagView.vue";
-import AxisView from "../views/front/AxisView.vue";
-import AboutView from "../views/front/AboutView.vue";
-import LoginView from "../views/back/LoginView.vue";
+import HomeViewFront from '../views/front/HomeView.vue'
+import ClassificationFront from "../views/front/ClassifyView.vue";
+import TagViewFront from "../views/front/TagView.vue";
+import AxisViewFront from "../views/front/AxisView.vue";
+import AboutViewFront from "../views/front/AboutView.vue";
+import LoginViewBack from "../views/back/LoginView.vue";
+import HomeViewBack from "../views/back/HomeView.vue";
+import ArticlesDetailView from "../views/front/ArticlesDetailView.vue";
+import ArticlesListView from "@/views/back/Articles/ArticlesListView.vue";
+import Editor from "@/components/back/Editor.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
+        /*-------------------------------- 前台路由 --------------------------------*/
         {
             path: '/',
             name: 'home',
-            component: HomeView
-        }, {
-            path: '/classify',
-            name: 'classify',
-            component: Classification
-        }, {
-            path: '/tag',
-            name: 'tag',
-            component: TagView
-        }, {
-            path: '/axis',
-            name: 'axis',
-            component: AxisView
-        }, {
-            path: '/about',
-            name: 'about',
-            component: AboutView
-        }, {
-            path: '/login',
-            name: 'login',
-            component: LoginView
-        }
+            component: HomeViewFront,
+        },
+        {
+            path: '/front',
+            name: 'front',
+            children: [
+                {
+                    path: 'home',
+                    name: 'front-home',
+                    component: HomeViewFront,
+                },
+                {
+                    path: 'tag',
+                    name: 'front-tag',
+                    component: TagViewFront
+                },
+                {
+                    path: 'classify',
+                    name: 'front-classify',
+                    component: ClassificationFront,
+                }, {
+                    path: 'axis',
+                    name: 'front-axis',
+                    component: AxisViewFront
+                }, {
+                    path: 'about',
+                    name: 'front-about',
+                    component: AboutViewFront
+                }, {
+                    path: 'articlesDetail',
+                    name: 'front-articlesDetail',
+                    component: ArticlesDetailView
+                },
+            ]
+        },
+        /*-------------------------------- 后台路由 --------------------------------*/
+        {
+            path: '/back',
+            name: 'back',
+            children: [
+                {
+                    path: 'home',
+                    name: 'back-home',
+                    component: HomeViewBack,
+                    children: [
+                        {
+                            path: 'articlesList',
+                            name: "ArticlesList",
+                            component: ArticlesListView
+                        },{
+                            path: 'editor',
+                            name: 'editor',
+                            component: Editor
+                        }
+                    ]
+                },
+                {
+                    path: 'login',
+                    name: 'back-login',
+                    component: LoginViewBack
+                }
+            ]
+        },
     ]
 })
 

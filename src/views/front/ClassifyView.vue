@@ -6,31 +6,32 @@
     </el-affix>
     <el-container class="container">
       <!--侧边栏-->
-      <el-aside class="container-aside">
-        <el-row class="tac">
-          <el-col >
-            <el-menu
-                default-active="2"
-                class="el-menu-vertical-demo"
-                @open="handleOpen"
-                @close="handleClose"
-            >
-              <el-sub-menu index="1">
-                <template #title>
-                  <span>Navigator One</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="1-1">item one</el-menu-item>
-                </el-menu-item-group>
-                <el-sub-menu index="1-2">
-                  <template #title>item four</template>
-                  <el-menu-item index="1-2-1">item one</el-menu-item>
-                </el-sub-menu>
+      <el-aside  class="container-aside">
+        <el-col style="max-width: 100%" :span="12">
+          <el-menu
+              default-active="2"
+              class="el-menu-vertical-demo"
+              @open="handleOpen"
+              @close="handleClose"
+          >
+            <el-sub-menu index="1">
+              <template #title>
+                <el-icon><location /></el-icon>
+                <span>Navigator One</span>
+              </template>
+              <el-sub-menu index="1-4">
+                <template #title>item four</template>
+                <el-menu-item index="1-4-1">item one</el-menu-item>
               </el-sub-menu>
-            </el-menu>
-          </el-col>
-        </el-row>
+            </el-sub-menu>
+            <el-menu-item index="2">
+              <el-icon><icon-menu /></el-icon>
+              <span>Navigator Two</span>
+            </el-menu-item>
+          </el-menu>
+        </el-col>
       </el-aside>
+
       <!--内容栏-->
       <el-main class="container-main">
         <el-empty description=" "/>
@@ -40,13 +41,21 @@
 </template>
 
 <script>
-import Navbar from "../../components/Navbar.vue";
+import Navbar from "../../components/front/Navbar.vue";
 
 export default {
   name: "Classification",
   components: {Navbar},
   data() {
     return {}
+  },
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    }
   }
 }
 
@@ -64,10 +73,6 @@ export default {
 
   .container-aside {
     padding: 20px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    //background-color: antiquewhite;
   }
 
   .container-main {

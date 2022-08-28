@@ -7,7 +7,11 @@
     "preview": "vite preview --port 4173"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.0.9",
+    "axios": "^0.27.2",
     "element-plus": "^2.2.13",
+    "marked": "^4.0.19",
+    "md-editor-v3": "^2.2.1",
     "sass": "^1.54.0",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"

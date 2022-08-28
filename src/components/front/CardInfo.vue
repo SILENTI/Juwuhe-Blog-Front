@@ -11,10 +11,9 @@
       <!--联系方式-->
       <div class="contact">
         <a target="_blank" :href="GitHubUrl"><i class="iconfont icon-github-fill"/></a>
-        <a  href="/login"><i class="iconfont icon-zhantingrukou"/></a>
+        <a  href="/back/login"><i class="iconfont icon-zhantingrukou"/></a>
         <a href="mailto: fruitboxs@outlook.com"><i class="iconfont icon-youxiang"/></a>
       </div>
-
       <!--文章数量-->
       <div class="num">
         <div class="article-num">
@@ -69,6 +68,8 @@ body {
 //}
 
 .Card-Info {
+  height: 100%;
+  width: 100%;
   //background-color: antiquewhite;
   margin: 0px 10px 10px;
   display: flex;

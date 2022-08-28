@@ -1,18 +1,19 @@
 <template>
-  <div class="card-main" v-for="item in 10">
+  <div class="card-main" v-for="article in articleList">
     <div class="card-image">
       <img :src=imageURL>
     </div>
-    <div class="card-text">
-
-      <a href="">
-        <h1>这是一篇博客</h1>
+    <div class="card-text" >
+      <a href="/front/articlesDetail">
+        <h1>{{article.articleTitle}}</h1>
         <p>年度总结前言今天是2022年7月19日，距离我第一次正式建立网站已经过去了381天（2021.7.3 2...</p>
       </a>
       <div class="card-tag">
         <a href=""><i class="iconfont icon-jurassic_user"/>居無何</a>
-        <a href=""><i class="iconfont icon-shijian"/>2022-8-16</a>
-        <div><i class="iconfont icon-tianchongxing-"/><a id="card-tag" href="">标签</a><a id="card-tag" href="">标签</a></div>
+        <a href=""><i class="iconfont icon-shijian"/>{{new Date(article.articleDate).toLocaleDateString()}}</a>
+        <div>
+          <i class="iconfont icon-tianchongxing-"/><a id="card-tag" href="" v-for="label in article.labelsVOList" >{{label.labelName}}</a>
+        </div>
       </div>
     </div>
   </div>
@@ -20,7 +21,17 @@
 
 <script>
 export default {
-  name: "Card",
+  name: "CardArticles",
+  props: {
+    articleList: {
+      type: Array,
+      default: [{
+        articleTitle: 'Java基础',
+        articleDate: '2022-8-20',
+        labelsVOList:[{labelName: 'Java'}]
+      }],
+    },
+  },
   data() {
     return {
       imageURL: "https://w.wallhaven.cc/full/e7/wallhaven-e7kpl8.png",
@@ -75,7 +86,7 @@ export default {
       margin-right: 20px;
     }
     #card-tag{
-      margin-right: 5px;
+      margin-right: 10px;
     }
   }
 }

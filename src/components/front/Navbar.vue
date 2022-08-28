@@ -6,13 +6,13 @@
     </a>
     <div class="header-link">
       <div class="header-input">
-        <el-input  v-model="input"  ></el-input>
+        <el-input @keyup.enter.native="searchArticles(input)" v-model="input"></el-input>
       </div>
-      <a href="/"><i class="iconfont icon-home2" /> 主页</a>
-      <a href="/classify"><i class="iconfont icon-fenlei" /> 分类</a>
-      <a href="/tag"><i class="iconfont icon-tianchongxing-" /> 标签</a>
-      <a href="/axis"><i class="iconfont icon-shijian" /> 时间轴</a>
-      <a href="/about"><i class="iconfont icon-jurassic_user" /> 关于我</a>
+      <a href="/"><i class="iconfont icon-home2"/> 主页</a>
+      <a href="/front/classify"><i class="iconfont icon-fenlei"/> 分类</a>
+      <a href="/front/tag"><i class="iconfont icon-tianchongxing-"/> 标签</a>
+      <a href="/front/axis"><i class="iconfont icon-shijian"/> 时间轴</a>
+      <a href="/front/about"><i class="iconfont icon-jurassic_user"/> 关于我</a>
     </div>
   </div>
 </template>
@@ -24,6 +24,11 @@ export default {
       circleUrl: "https://images.juwuhe.top/i/2022/08/12/xmpuo0-3.jpg",
       logoUrl: "https://images.juwuhe.top/i/2022/06/04/ibzp5h.png",
       input: '',
+    }
+  },
+  methods: {
+    searchArticles(input){
+      console.log(input)
     }
   }
 }
@@ -51,17 +56,17 @@ export default {
     align-items: center; //y轴居中
   }
 
-  .header-link{
+  .header-link {
     padding: 0;
     display: flex;
     list-style-type: none; //去除点
     align-items: center; //y轴居中
 
-    .header-input{
+    .header-input {
       margin-right: 20px;
     }
 
-    a{
+    a {
       margin: 10px;
     }
   }

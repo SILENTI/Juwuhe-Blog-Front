@@ -6,9 +6,9 @@
       <div class="name flex">
         <!--        <el-avatar class="avatar" :size="150" :src="circleUrl"/>-->
         <div style="margin-top:30px">
-          <h1 >居無何</h1>
+          <h1>居無何</h1>
         </div>
-        <p  style="font-family: 汉仪瘦金书简; font-size: 2em">梦不会逃走，逃走的一直都是自己。</p>
+        <p style="font-family: 汉仪瘦金书简; font-size: 2em">梦不会逃走，逃走的一直都是自己。</p>
       </div>
     </div>
 
@@ -21,56 +21,80 @@
 
     <!-- 内容条 -->
     <div class="main-content">
-      <div>
-        <Card/>
+      <div style="width: 900px;">
+        <CardArticles :article-list="this.articleList"/>
       </div>
-      <el-affix :offset="100">
+      <el-affix target=".main-content" :offset="100">
         <CardInfo/>
       </el-affix>
     </div>
+
   </div>
   <!--分页-->
   <div class="page">
     <el-pagination
         background
-        @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page.sync="currentPage3"
-        :page-size="100"
+        :current-page.sync="page.pageNum"
+        :page-size="page.pageSize"
         layout="prev, pager, next, jumper"
-        :total="1000">
+        :total="page.total">
     </el-pagination>
   </div>
 
   <!-- 页脚 -->
-  <div class="footer">
-  <!--网站起始时间-->
-  <!--公安备案-->
-  </div>
+<!--  <div class="footer">-->
+<!--    &lt;!&ndash;网站起始时间&ndash;&gt;-->
+<!--    <h2>这是页脚</h2>-->
+<!--    &lt;!&ndash;公安备案&ndash;&gt;-->
+<!--  </div>-->
 
 </template>
 <script>
-import Navbar from "../../components/Navbar.vue";
-import Card from "../../components/CardArticles.vue"
-import CardInfo from "../../components/CardInfo.vue";
+import Navbar from "../../components/front/Navbar.vue";
+import CardArticles from "../../components/front/CardArticles.vue"
+import CardInfo from "../../components/front/CardInfo.vue";
+import {queryArticlesPage} from "../../api/articles";
 
 export default {
-  components: {CardInfo, Card, Navbar},
+  components: {CardInfo, CardArticles, Navbar},
   data() {
     return {
       circleUrl: "https://images.juwuhe.top/i/2022/08/12/xmpuo0-3.jpg",
       logoUrl: "https://images.juwuhe.top/i/2022/06/04/ibzp5h.png",
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4
+      //分页数据
+      page: {
+        pageNum: 1,
+        pageSize: 10,
+        total: 0
+      },
+      //博文集合
+      articleList: [],
     }
   },
+  created() {
+    this.queryClassifyLadle();
+  },
   methods: {
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    /*查询博文及其所属标签信息*/
+    queryClassifyLadle() {
+      queryArticlesPage(this.page).then(res => {
+        console.log("加载数据成功")
+        console.log(res)
+        if (res.success) {
+          this.page.total = res.data.total
+          this.articleList = res.data.list
+          console.log(this.articleList)
+        } else {
+          console.log(res.message)
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     },
+    /*更改页数的方法*/
     handleCurrentChange(val) {
+      this.page.pageNum = val
       console.log(`当前页: ${val}`);
     }
   },
@@ -110,40 +134,13 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: url(https://w.wallhaven.cc/full/1k/wallhaven-1k6ljv.jpg) center/cover no-repeat;
+  background: url("https://w.wallhaven.cc/full/1k/wallhaven-1k6ljv.jpg") center/cover no-repeat;
 }
 
 .name {
   justify-content: center;
   align-items: center;
   flex-direction: column;
- /*
-  body {
-    background: black;
-    color: #fff;
-  }
-  p{
-    border-right: 0.1em solid;
-    width: 16.5em;
-    width: 26ch;
-    margin: 2em 1em;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: typing 3s steps(26, end),
-    cursor-blink 0.3s step-end infinite alternate;
-  }
-  }
-
-  @keyframes typing {
-    from {
-      width: 0;
-    }
-  }
-
-  @keyframes cursor-blink {
-    50% {
-      border-color: transparent;
-    }*/
 }
 
 .main-content {
@@ -153,15 +150,21 @@ export default {
   justify-content: space-evenly;
 }
 
-.navbar{
+.navbar {
+  //背景阴影
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
 }
 
-.page{
+.page {
   display: flex;
   justify-content: center;
   margin: 50px 0px;
+}
+
+.footer {
+  height: 100px;
+  text-align: center;
+  font-family: 汉仪瘦金书简;
 }
 
 </style>

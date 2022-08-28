@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Navbar from "../../components/Navbar.vue";
+import Navbar from "../../components/front/Navbar.vue";
 
 export default {
   name: "AboutView",
@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       aboutBackURL: "https://w.wallhaven.cc/full/l3/wallhaven-l35jjp.jpg",
-      circleUrl: "https://images.juwuhe.top/i/2022/08/12/xmpuo0-3.jpg",
+      circleUrl: "/public/image/avatar-1.jpg",
 
     }
   }

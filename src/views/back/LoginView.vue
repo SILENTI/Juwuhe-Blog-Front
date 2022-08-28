@@ -19,6 +19,8 @@
   </div>
 </template>
 <script>
+import {login} from "../../api/admin";
+
 export default {
   name: "LoginView",
   data() {
@@ -32,7 +34,16 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log('submit!');
+      login(this.form).then(res => {
+        console.log(res)
+        if (res.success){
+          this.$router.push("/back/home")
+        }else {
+
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }

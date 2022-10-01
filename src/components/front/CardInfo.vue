@@ -42,7 +42,7 @@
 
 <script>
 export default {
-  name: "CardInfo",
+  articleTitle: "CardInfo",
   data() {
     return {
       AvatarUtl: "https://images.juwuhe.top/i/2022/08/12/xmpuo0-3.jpg",

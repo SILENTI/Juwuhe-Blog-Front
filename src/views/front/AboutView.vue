@@ -21,7 +21,7 @@
 import Navbar from "../../components/front/Navbar.vue";
 
 export default {
-  name: "AboutView",
+  articleTitle: "AboutView",
   components: {Navbar},
   data() {
     return {

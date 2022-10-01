@@ -54,7 +54,7 @@
 import Navbar from "../../components/front/Navbar.vue";
 import CardArticles from "../../components/front/CardArticles.vue"
 import CardInfo from "../../components/front/CardInfo.vue";
-import {queryArticlesPage} from "../../api/articles";
+import {queryArticlesPage} from "../../api/article";
 
 export default {
   components: {CardInfo, CardArticles, Navbar},

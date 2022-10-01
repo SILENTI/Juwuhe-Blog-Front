@@ -8,7 +8,7 @@
 import {marked} from 'marked'
 
 export default {
-  name: "ArticlesDetailView",
+  articleTitle: "ArticlesDetailView",
   data(){
     return{
       blog: ''

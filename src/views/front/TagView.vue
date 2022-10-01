@@ -14,27 +14,21 @@
     <CardArticles v-bind:article-list="this.articlesList"/>
     <!--分页-->
     <div class="page">
-      <el-pagination
-          background
-          @current-change="handleCurrentChange"
-          :current-page.sync="this.page.pageNum"
-          :page-size="this.page.pageSize"
-          layout="prev, pager, next, jumper"
-          :total="this.page.total">
-      </el-pagination>
+      <Pagination v-model:page="page"/>
     </div>
   </div>
 </template>
 
 <script>
-import Navbar from "../../components/front/Navbar.vue";
-import CardArticles from "../../components/front/CardArticles.vue";
-import {queryAll} from "../../api/label";
-import {queryArticlesPage, queryArticlesByLabelId} from "../../api/articles";
+import Navbar from "@/components/front/Navbar.vue";
+import CardArticles from "@/components/front/CardArticles.vue";
+import {queryAllLabel} from "@/api/label";
+import {queryArticlesPage, queryArticlesByLabelId} from "@/api/article";
+import Pagination from "@/components/shared/Pagination.vue";
 
 export default {
-  name: "TagView",
-  components: {Navbar, CardArticles},
+  articleTitle: "TagView",
+  components: {Pagination, Navbar, CardArticles},
   data() {
     return {
       //分页相关
@@ -75,7 +69,7 @@ export default {
     },
     /*查询所有的标签信息*/
     queryAllTage() {
-      queryAll().then(response => {
+      queryAllLabel().then(response => {
         console.log("调用成功！！！")
         console.log(response)
         if (response.success) {

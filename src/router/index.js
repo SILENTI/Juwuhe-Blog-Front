@@ -7,8 +7,10 @@ import AboutViewFront from "../views/front/AboutView.vue";
 import LoginViewBack from "../views/back/LoginView.vue";
 import HomeViewBack from "../views/back/HomeView.vue";
 import ArticlesDetailView from "../views/front/ArticlesDetailView.vue";
-import ArticlesListView from "@/views/back/Articles/ArticlesListView.vue";
+import ArticlesList from "@/components/back/ArticleList.vue";
 import Editor from "@/components/back/Editor.vue";
+import ClassifyLabel from "@/components/back/ClassifyLabel.vue";
+import Gallery from "@/components/back/Gallery.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,38 +18,38 @@ const router = createRouter({
         /*-------------------------------- 前台路由 --------------------------------*/
         {
             path: '/',
-            name: 'home',
+            articleTitle: 'home',
             component: HomeViewFront,
         },
         {
             path: '/front',
-            name: 'front',
+            articleTitle: 'front',
             children: [
                 {
                     path: 'home',
-                    name: 'front-home',
+                    articleTitle: 'front-home',
                     component: HomeViewFront,
                 },
                 {
                     path: 'tag',
-                    name: 'front-tag',
+                    articleTitle: 'front-tag',
                     component: TagViewFront
                 },
                 {
                     path: 'classify',
-                    name: 'front-classify',
+                    articleTitle: 'front-classify',
                     component: ClassificationFront,
                 }, {
                     path: 'axis',
-                    name: 'front-axis',
+                    articleTitle: 'front-axis',
                     component: AxisViewFront
                 }, {
                     path: 'about',
-                    name: 'front-about',
+                    articleTitle: 'front-about',
                     component: AboutViewFront
                 }, {
                     path: 'articlesDetail',
-                    name: 'front-articlesDetail',
+                    articleTitle: 'front-articlesDetail',
                     component: ArticlesDetailView
                 },
             ]
@@ -55,27 +57,35 @@ const router = createRouter({
         /*-------------------------------- 后台路由 --------------------------------*/
         {
             path: '/back',
-            name: 'back',
+            articleTitle: 'back',
             children: [
                 {
                     path: 'home',
-                    name: 'back-home',
+                    articleTitle: 'back-home',
                     component: HomeViewBack,
                     children: [
                         {
                             path: 'articlesList',
-                            name: "ArticlesList",
-                            component: ArticlesListView
+                            articleTitle: "ArticlesList",
+                            component: ArticlesList
                         },{
                             path: 'editor',
-                            name: 'editor',
+                            articleTitle: 'editor',
                             component: Editor
+                        },{
+                            path: 'classifyLabel',
+                            articleTitle: 'classifyLabel',
+                            component: ClassifyLabel
+                        },{
+                            path: 'gallery',
+                            articleTitle: 'gallery',
+                            component: Gallery
                         }
                     ]
                 },
                 {
                     path: 'login',
-                    name: 'back-login',
+                    articleTitle: 'back-login',
                     component: LoginViewBack
                 }
             ]

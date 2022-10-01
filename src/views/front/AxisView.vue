@@ -35,7 +35,7 @@
 import Navbar from "../../components/front/Navbar.vue"
 
 export default {
-  name: "AxisView",
+  articleTitle: "AxisView",
   components: {Navbar},
 }
 </script>

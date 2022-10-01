@@ -1,6 +1,5 @@
 <template>
   <div class="common-layout">
-
     <!--侧边栏-->
     <el-menu
         :default-active="this.$route.path"
@@ -13,6 +12,16 @@
         style="height: 100%"
         :router='true'
     >
+      <div @click="changeSidebar">
+        <el-menu-item style="display: flex; justify-content: center;">
+          <el-avatar
+              v-if="isCollapse"
+              size="small"
+              src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+          />
+          <h2 v-if="!isCollapse" style="font-family: 宋体">居無何</h2>
+        </el-menu-item>
+      </div>
       <el-menu-item index="/back/home">
         <template #title>
           主页
@@ -26,47 +35,37 @@
           <el-icon>
             <Menu/>
           </el-icon>
-          <span>文章管理</span>
+          <span>文章</span>
         </template>
         <el-menu-item index="/back/home/editor">文章发布</el-menu-item>
         <el-menu-item index="/back/home/articlesList">文章列表</el-menu-item>
-        <el-menu-item index="2-3">分类管理</el-menu-item>
-        <el-menu-item index="2-4">标签管理</el-menu-item>
+        <el-menu-item index="/back/home/classifyLabel">分类标签</el-menu-item>
       </el-sub-menu>
       <el-sub-menu index="3">
         <template #title>
           <el-icon>
             <MessageBox/>
           </el-icon>
-          <span>消息管理</span>
+          <span>消息</span>
         </template>
-        <el-menu-item index="3-1">评论管理</el-menu-item>
-        <el-menu-item index="3-2">留言管理</el-menu-item>
+        <el-menu-item index="3-1">文章评论</el-menu-item>
+        <el-menu-item index="3-2">博客留言</el-menu-item>
       </el-sub-menu>
-      <el-menu-item index="4">
-        <template #title>图库管理</template>
+      <el-menu-item index="/back/home/gallery">
+        <template #title>图库</template>
         <el-icon>
           <PictureFilled/>
         </el-icon>
       </el-menu-item>
       <el-menu-item index="5">
-        <template #title>用户管理</template>
+        <template #title>用户</template>
         <el-icon>
           <UserFilled/>
         </el-icon>
       </el-menu-item>
     </el-menu>
-    <el-container>
 
-      <!--导航栏-->
-      <el-header class="header">
-        <el-button v-on:click="changeSidebar">
-          <el-icon>
-            <Expand v-if="this.isCollapse"/>
-            <Fold v-else/>
-          </el-icon>
-        </el-button>
-      </el-header>
+    <el-container>
 
       <!--主内容-->
       <el-main class="main">
@@ -92,7 +91,7 @@ import {
 } from '@element-plus/icons-vue'
 
 export default {
-  name: "HomeView",
+  articleTitle: "HomeView",
   components: {
     Location, Expand, Fold, HomeFilled, UserFilled, MessageBox, PictureFilled, Setting, Menu, Document
   },
@@ -106,9 +105,6 @@ export default {
     changeSidebar() {
       this.sidebar === 'sidebar' ? this.sidebar = 'noSidebar' : this.sidebar = 'sidebar';
       this.isCollapse ? this.isCollapse = false : this.isCollapse = true;
-    },
-    handleOpen(key) {
-      console.log(key);
     },
   }
 }
@@ -131,7 +127,7 @@ export default {
     height: 100vh;
   }
 
-  .main{
+  .main {
     height: 100%;
     width: 100%;
   }

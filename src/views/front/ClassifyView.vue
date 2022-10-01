@@ -44,7 +44,7 @@
 import Navbar from "../../components/front/Navbar.vue";
 
 export default {
-  name: "Classification",
+  articleTitle: "Classification",
   components: {Navbar},
   data() {
     return {}

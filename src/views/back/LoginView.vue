@@ -22,7 +22,7 @@
 import {login} from "../../api/admin";
 
 export default {
-  name: "LoginView",
+  articleTitle: "LoginView",
   data() {
     return {
       labelPosition: 'right',

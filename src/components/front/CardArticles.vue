@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "CardArticles",
+  articleTitle: "CardArticles",
   props: {
     articleList: {
       type: Array,

@@ -36,6 +36,7 @@
       <!--文章分類標簽-->
       <el-form-item label="文章分类">
         <el-tree-select
+            :props="{  children: 'childrenClassify',label: 'classifyName'}"
             ref="treeRef"
             v-model="classifyName"
             :data="classifyData"
@@ -94,14 +95,13 @@
 </template>
 
 <script lang="ts" setup>
-import {ref, reactive} from 'vue';
+import {reactive, ref} from 'vue';
 import type {UploadProps, UploadUserFile} from 'element-plus'
-import { ElNotification, ElTree } from 'element-plus'
+import {ElNotification, ElTree} from 'element-plus'
 import MdEditorV3 from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import axios from "axios";
 
-/**生命钩子*/
 
 /**编辑器相关*/
 //文章相关信息

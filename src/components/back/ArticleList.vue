@@ -123,6 +123,10 @@ export default {
   /**钩子*/
   created() {
     this.getArticleList();
+    setTimeout(() => {
+      // 方法区
+      this.isShow = false
+    }, 1000);
   },
   /**方法函数*/
   methods: {
@@ -132,10 +136,7 @@ export default {
         console.log(res.data)
         if (res.success) {
           // 过500毫秒调用
-          setTimeout(() => {
-            // 方法区
-            this.isShow = false
-          }, 1500);
+
           this.page.total = res.data.total
           this.articledList = res.data.list
         } else {

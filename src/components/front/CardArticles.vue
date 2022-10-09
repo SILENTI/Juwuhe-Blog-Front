@@ -1,18 +1,22 @@
 <template>
   <div class="card-main" v-for="article in articleList">
     <div class="card-image">
-      <img :src=imageURL>
+      <img :src=article.articleImg>
     </div>
-    <div class="card-text" >
+    <div class="card-text">
       <a href="/front/articlesDetail">
-        <h1>{{article.articleTitle}}</h1>
-        <p>年度总结前言今天是2022年7月19日，距离我第一次正式建立网站已经过去了381天（2021.7.3 2...</p>
+        <h1>{{ article.articleTitle }}</h1>
+        <p>{{ article.articleDescription }}</p>
       </a>
       <div class="card-tag">
         <a href=""><i class="iconfont icon-jurassic_user"/>居無何</a>
-        <a href=""><i class="iconfont icon-shijian"/>{{new Date(article.articleDate).toLocaleDateString()}}</a>
+        <a href=""><i class="iconfont icon-shijian"/>{{ new Date(article.articleDate).toLocaleDateString() }}</a>
         <div>
-          <i class="iconfont icon-tianchongxing-"/><a id="card-tag" href="" v-for="label in article.labelsVOList" >{{label.labelName}}</a>
+          <i class="iconfont icon-tianchongxing-"/>
+          <a id="card-tag" href=""
+             v-for="item in article.labelVOList">
+            {{ item }}
+          </a>
         </div>
       </div>
     </div>
@@ -24,12 +28,7 @@ export default {
   articleTitle: "CardArticles",
   props: {
     articleList: {
-      type: Array,
-      default: [{
-        articleTitle: 'Java基础',
-        articleDate: '2022-8-20',
-        labelsVOList:[{labelName: 'Java'}]
-      }],
+      type: Array
     },
   },
   data() {
@@ -62,6 +61,7 @@ export default {
   display: flex;
   align-items: center;
   max-width: 300px;
+
   img {
     width: 100%;
     height: 100%;
@@ -79,13 +79,16 @@ export default {
   .card-tag {
     display: flex;
     align-items: center;
+
     i {
       margin-right: 2px;
     }
+
     a {
       margin-right: 20px;
     }
-    #card-tag{
+
+    #card-tag {
       margin-right: 10px;
     }
   }

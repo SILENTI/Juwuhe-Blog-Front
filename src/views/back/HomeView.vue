@@ -66,7 +66,6 @@
     </el-menu>
 
     <el-container>
-
       <!--主内容-->
       <el-main class="main">
         <RouterView/>
@@ -130,6 +129,7 @@ export default {
   .main {
     height: 100%;
     width: 100%;
+    overflow: scroll;
   }
 
 }

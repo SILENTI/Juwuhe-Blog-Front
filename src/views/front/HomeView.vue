@@ -1,54 +1,55 @@
 <template>
-  <div class="wrapper">
 
-    <!-- 头像/名字展示 -->
-    <div class="main-box flex">
-      <div class="name flex">
-        <!--        <el-avatar class="avatar" :size="150" :src="circleUrl"/>-->
-        <div style="margin-top:30px">
-          <h1>居無何</h1>
+  <Transition>
+    <Animation style="width: 100vw; height: 100vh;" v-if="isShow"/>
+  </Transition>
+
+  <div v-show="!isShow">
+    <!--相关主内容-->
+    <div class="wrapper">
+      <!-- 头像/名字展示 -->
+      <div class="main-box flex">
+        <div class="name flex">
+          <div style="margin-top:30px">
+            <h1>居無何</h1>
+          </div>
+          <p style="font-family: 汉仪瘦金书简; font-size: 2em">梦不会逃走，逃走的一直都是自己。</p>
         </div>
-        <p style="font-family: 汉仪瘦金书简; font-size: 2em">梦不会逃走，逃走的一直都是自己。</p>
       </div>
-    </div>
 
-    <!-- 导航栏 -->
-    <div class="header">
-      <el-affix :offset="0">
-        <Navbar class="navbar" style="background-color: white"/>
-      </el-affix>
-    </div>
-
-    <!-- 内容条 -->
-    <div class="main-content">
-      <div style="width: 900px;">
-        <CardArticles :article-list="this.articleList"/>
+      <!-- 导航栏 -->
+      <div class="header">
+        <el-affix :offset="0">
+          <Navbar class="navbar" style="background-color: white"/>
+        </el-affix>
       </div>
-      <el-affix target=".main-content" :offset="100">
-        <CardInfo/>
-      </el-affix>
+
+      <!-- 内容条 -->
+      <div class="main-content">
+        <div style="width: 900px;">
+          <CardArticles :article-list="this.articleList"/>
+        </div>
+        <el-affix target=".main-content" :offset="100">
+          <CardInfo/>
+        </el-affix>
+      </div>
+
     </div>
 
+    <!--分页-->
+    <div class="page">
+      <el-pagination
+          background
+          @current-change="handleCurrentChange"
+          :current-page.sync="page.pageNum"
+          :page-size="page.pageSize"
+          layout="prev, pager, next, jumper"
+          :total="page.total">
+      </el-pagination>
+    </div>
   </div>
 
-  <!--分页-->
-  <div class="page">
-    <el-pagination
-        background
-        @current-change="handleCurrentChange"
-        :current-page.sync="page.pageNum"
-        :page-size="page.pageSize"
-        layout="prev, pager, next, jumper"
-        :total="page.total">
-    </el-pagination>
-  </div>
 
-  <!-- 页脚 -->
-<!--  <div class="footer">-->
-<!--    &lt;!&ndash;网站起始时间&ndash;&gt;-->
-<!--    <h2>这是页脚</h2>-->
-<!--    &lt;!&ndash;公安备案&ndash;&gt;-->
-<!--  </div>-->
 
 </template>
 <script>
@@ -56,9 +57,10 @@ import Navbar from "../../components/front/Navbar.vue";
 import CardArticles from "../../components/front/CardArticles.vue"
 import CardInfo from "../../components/front/CardInfo.vue";
 import {queryArticlesPage} from "../../api/article";
+import Animation from "@/components/shared/Animation.vue";
 
 export default {
-  components: {CardInfo, CardArticles, Navbar},
+  components: {CardInfo, CardArticles, Navbar, Animation},
   data() {
     return {
       circleUrl: "https://images.juwuhe.top/i/2022/08/12/xmpuo0-3.jpg",
@@ -71,6 +73,8 @@ export default {
       },
       //博文集合
       articleList: [],
+      //展示的额内容
+      isShow: true,
     }
   },
   created() {
@@ -85,6 +89,13 @@ export default {
         if (res.success) {
           this.page.total = res.data.total
           this.articleList = res.data.list
+
+          //加载动画
+          setTimeout(() => {
+            // 方法区
+            this.isShow = false
+          }, 1000);
+
           console.log(this.articleList)
         } else {
           console.log(res.message)

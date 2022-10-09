@@ -21,10 +21,23 @@ export function updateClassify(classify) {
     })
 }
 
+/**
+ * 添加分类信息
+ * */
 export function addClassify(classify) {
     return request({
         url: '/classify/add',
         method: 'post',
         data: classify
+    })
+}
+
+/**
+ * 查询所有的文章及其分类信息
+ * */
+export function queryArticleAndClassify() {
+    return request({
+        url: '/classify/queryInfo',
+        method: 'post'
     })
 }

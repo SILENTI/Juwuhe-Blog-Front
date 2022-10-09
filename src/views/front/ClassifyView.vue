@@ -11,23 +11,28 @@
           <el-menu
               default-active="2"
               class="el-menu-vertical-demo"
-              @open="handleOpen"
-              @close="handleClose"
+              v-for="classifyVO in this.classifyVOList"
           >
-            <el-sub-menu index="1">
+            <!--第一大项-->
+            <el-sub-menu :index="classifyVO.classifyId">
               <template #title>
-                <el-icon><location /></el-icon>
-                <span>Navigator One</span>
+                <span>{{ classifyVO.classifyName }}</span>
               </template>
-              <el-sub-menu index="1-4">
-                <template #title>item four</template>
-                <el-menu-item index="1-4-1">item one</el-menu-item>
-              </el-sub-menu>
+
+              <!--文章标题-->
+              <el-menu-item v-for="article in classifyVO.articleVOList" :index="article.articleId">
+                {{ article.articleTitle }}
+              </el-menu-item>
+
+<!--              <el-sub-menu v-for="childrenClassify in classifyVO.childrenClassify" :index="childrenClassify.classifyId">
+                <template #title>{{ childrenClassify.classifyName }}</template>
+                <el-menu-item v-for="childrenArticle in childrenClassify.articleVOList" :index="childrenArticle.articleId">
+                  {{ childrenArticle.articleTitle }}
+                </el-menu-item>
+              </el-sub-menu>-->
+
             </el-sub-menu>
-            <el-menu-item index="2">
-              <el-icon><icon-menu /></el-icon>
-              <span>Navigator Two</span>
-            </el-menu-item>
+
           </el-menu>
         </el-col>
       </el-aside>
@@ -42,20 +47,36 @@
 
 <script>
 import Navbar from "../../components/front/Navbar.vue";
+import {queryArticleAndClassify} from "@/api/classify";
 
 export default {
   articleTitle: "Classification",
-  components: {Navbar},
+  components: { Navbar},
   data() {
-    return {}
+    return {
+      classifyVOList: []
+    }
+  },
+  //声明钩子
+  created() {
+    this.getArticleAndClassify();
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+    //读取文章和分类信息
+    getArticleAndClassify(){
+      console.log('===================')
+      queryArticleAndClassify().then(res =>{
+        console.log(res)
+        if (res.success){
+          console.log(res.data)
+          this.classifyVOList = res.data
+        }else {
+          console.log(res.message)
+        }
+      }).catch(error =>{
+        console.log(error)
+      })
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    }
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="card-main" v-for="article in articleList">
+  <div class="card-main" v-for="(article, index) in this.articleList">
     <div class="card-image">
       <img :src=article.articleImg>
     </div>
@@ -14,8 +14,8 @@
         <div>
           <i class="iconfont icon-tianchongxing-"/>
           <a id="card-tag" href=""
-             v-for="item in article.labelVOList">
-            {{ item }}
+             v-for="label in getLabelNames(article.labelVOList)">
+            {{ label }}
           </a>
         </div>
       </div>
@@ -28,12 +28,22 @@ export default {
   articleTitle: "CardArticles",
   props: {
     articleList: {
-      type: Array
+      type: Array,
+      required: true
     },
   },
   data() {
     return {
       imageURL: "https://w.wallhaven.cc/full/e7/wallhaven-e7kpl8.png",
+    }
+  }, methods: {
+    getLabelNames(array) {
+      const newLabelNameList = [];
+      for (const arrayElement of array) {
+        if (arrayElement == null || arrayElement.labelName == null) break;
+        newLabelNameList.push(arrayElement.labelName)
+      }
+      return newLabelNameList;
     }
   }
 }
@@ -60,7 +70,8 @@ export default {
 .card-image {
   display: flex;
   align-items: center;
-  max-width: 300px;
+  width: 300px;
+  height: 200px;
 
   img {
     width: 100%;

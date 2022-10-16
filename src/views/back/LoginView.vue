@@ -20,6 +20,7 @@
 </template>
 <script>
 import {login} from "../../api/admin";
+import { ElNotification } from 'element-plus'
 
 export default {
   articleTitle: "LoginView",
@@ -37,9 +38,24 @@ export default {
       login(this.form).then(res => {
         console.log(res)
         if (res.success){
+          //将token存储到本地缓中
+          localStorage.setItem('token',res.data.token)
+
+          //通知
+          ElNotification({
+            title: 'Success',
+            message: '登录成功',
+            type: 'success',
+          })
+
+          //进行页面跳转
           this.$router.push("/back/home")
         }else {
-
+          ElNotification({
+            title: 'Error',
+            message: '账号或密码错误',
+            type: 'error',
+          })
         }
       }).catch(error => {
         console.log(error)

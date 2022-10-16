@@ -106,8 +106,9 @@
 import {addLabel, queryAllLabel, removeLabel} from "@/api/label";
 import {Delete} from '@element-plus/icons-vue'
 import {ElNotification} from 'element-plus'
-import {addClassify, queryAllClassify, updateClassify} from "@/api/classify";
+import {addClassify, queryAllClassify, removeClassify, updateClassify} from "@/api/classify";
 import Animation from "@/components/shared/Animation.vue";
+import {createApp} from "vue";
 
 export default {
   name: "ClassifyLabel",
@@ -157,16 +158,16 @@ export default {
 
     //添加节点
     addClassify(node) {
-
       addClassify({
         'parentClassifyId': node.data.classifyId,
         'classifyName': this.inputClassifyValue
       }).then(res => {
         console.log(res)
         if (res.success) {
-          this.Notification('success',res.message);
+          this.Notification('success', res.message);
+          this.queryAllClassify();
         } else {
-          this.Notification('error',res.message);
+          this.Notification('error', res.message);
         }
       }).catch(error => {
 
@@ -176,9 +177,32 @@ export default {
 
     //删除节点
     removeClassify(node, data) {
-      console.log('删除节点')
-      console.log(node)
-      console.log(data)
+      console.log('总节点：', data)
+      let classifyIdList = []
+      this.getRemoveClassifyIdList(data, classifyIdList)
+
+      //发送请求
+      removeClassify(classifyIdList).then(res =>{
+        if (res.success){
+          this.Notification('success', res.message)
+          this.queryAllClassify();
+        }else {
+          this.Notification('error', res.message)
+        }
+      }).catch(error =>{
+        this.Notification('error', error.message)
+      })
+    },
+
+    //获取删除节点旗下的ID集合
+    getRemoveClassifyIdList(node, array) {
+      array.push(node.classifyId);
+      if (node.childrenClassify === null || node.childrenClassify.length === 0) {
+        return array;
+      }
+      for (const nodeElement of node.childrenClassify) {
+        this.getRemoveClassifyIdList(nodeElement, array)
+      }
     },
 
     //节点拖动
@@ -287,7 +311,7 @@ export default {
       const num = Math.floor(Math.random() * (4 - 0 + 1)) + 0
       return this.labelType.at(num)
     },
-    Notification(type,message){
+    Notification(type, message) {
       ElNotification({
         title: type,
         message: message,

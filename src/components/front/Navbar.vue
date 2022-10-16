@@ -12,6 +12,7 @@
       <a href="/front/classify"><i class="iconfont icon-fenlei"/> 分类</a>
       <a href="/front/tag"><i class="iconfont icon-tianchongxing-"/> 标签</a>
       <a href="/front/axis"><i class="iconfont icon-shijian"/> 时间轴</a>
+      <a href="/front/guestbook"><i class="iconfont icon-liuyanfill"/> 留言墙</a>
       <a href="/front/about"><i class="iconfont icon-jurassic_user"/> 关于我</a>
     </div>
   </div>

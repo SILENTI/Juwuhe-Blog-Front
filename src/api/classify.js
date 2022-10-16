@@ -41,3 +41,15 @@ export function queryArticleAndClassify() {
         method: 'post'
     })
 }
+
+/**
+ * 删除分类信息
+ *
+ */
+export function removeClassify(classifyIdList){
+    return request({
+        url: '/classify/remove',
+        method: 'post',
+        data: classifyIdList
+    })
+}

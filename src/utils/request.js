@@ -9,7 +9,20 @@ export const service = axios.create({
     }
 })
 
-// 添加响应拦截器
+//请求拦截器
+service.interceptors.request.use(config =>{
+
+    console.log('请求拦截器-config：', config);
+
+    return config;
+},error => {
+
+    console.log('请求拦截器-error：', error)
+
+    return error;
+})
+
+//响应拦截器
 service.interceptors.response.use(response => {
     return response.data
 }, error => {

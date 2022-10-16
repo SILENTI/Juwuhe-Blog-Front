@@ -12,6 +12,19 @@ export function queryArticlesPage(data) {
 }
 
 /**
+ * 查询文章的详细信息
+ */
+export function queryArticle(articleId){
+    return request({
+        url: '/article/queryArticle',
+        method: 'post',
+        data: {
+            'articleId': articleId
+        }
+    })
+}
+
+/**
  * 根据标签Id查询博文信息
  * */
 export function queryArticlesByLabelId(data) {

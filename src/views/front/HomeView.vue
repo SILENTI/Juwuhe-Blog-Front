@@ -26,7 +26,7 @@
 
       <!-- 内容条 -->
       <div class="main-content">
-        <div style="width: 900px;">
+        <div style="width: 800px;">
           <CardArticles :article-list="this.articleList"/>
         </div>
         <el-affix target=".main-content" :offset="100">
@@ -38,17 +38,9 @@
 
     <!--分页-->
     <div class="page">
-      <el-pagination
-          background
-          @current-change="handleCurrentChange"
-          :current-page.sync="page.pageNum"
-          :page-size="page.pageSize"
-          layout="prev, pager, next, jumper"
-          :total="page.total">
-      </el-pagination>
+      <Pagination :page="this.page" @pageChange="pageChange"/>
     </div>
   </div>
-
 
 
 </template>
@@ -58,9 +50,10 @@ import CardArticles from "../../components/front/CardArticles.vue"
 import CardInfo from "../../components/front/CardInfo.vue";
 import {queryArticlesPage} from "../../api/article";
 import Animation from "@/components/shared/Animation.vue";
+import Pagination from "@/components/shared/Pagination.vue";
 
 export default {
-  components: {CardInfo, CardArticles, Navbar, Animation},
+  components: {Pagination, CardInfo, CardArticles, Navbar, Animation},
   data() {
     return {
       circleUrl: "https://images.juwuhe.top/i/2022/08/12/xmpuo0-3.jpg",
@@ -68,8 +61,8 @@ export default {
       //分页数据
       page: {
         pageNum: 1,
-        pageSize: 10,
-        total: 0
+        pageSize: 5,
+        total: 0,
       },
       //博文集合
       articleList: [],
@@ -108,7 +101,12 @@ export default {
     handleCurrentChange(val) {
       this.page.pageNum = val
       console.log(`当前页: ${val}`);
-    }
+    },
+    //分页页码切换
+    pageChange(pageNum) {
+      this.page.pageNum = pageNum
+      this.queryClassifyLadle()
+    },
   },
 }
 </script>
@@ -171,6 +169,10 @@ export default {
   display: flex;
   justify-content: center;
   margin: 50px 0px;
+
+  //height: 50px;
+  //display: flex;
+  //justify-content: center;
 }
 
 .footer {

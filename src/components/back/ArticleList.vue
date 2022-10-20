@@ -80,7 +80,7 @@
     </div>
     <!--文章分页-->
     <div class="article-page">
-      <Pagination v-model:page="page" @pageChange="pageChange"/>
+      <Pagination :page="page" @pageChange="pageChange"/>
     </div>
   </div>
 
@@ -135,8 +135,6 @@ export default {
       queryArticlesPage(this.page).then(res => {
         console.log(res.data)
         if (res.success) {
-          // 过500毫秒调用
-
           this.page.total = res.data.total
           this.articledList = res.data.list
         } else {
@@ -218,9 +216,7 @@ export default {
               message: '取消删除',
             })
           })
-
     }
-
   }
 }
 </script>

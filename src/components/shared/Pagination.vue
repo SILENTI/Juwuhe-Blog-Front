@@ -5,7 +5,7 @@
         :hide-on-single-page="true"
         :current-page.sync="page.pageNum"
         :page-size="page.pageSize"
-        layout="prev, pager, next, jumper"
+        layout="total, prev, pager, next, jumper"
         :total="page.total">
     </el-pagination>
   </div>
@@ -30,6 +30,7 @@ export default {
       },
       total:{
         type: Number,
+        default: 100,
         require: true,
       }
     }

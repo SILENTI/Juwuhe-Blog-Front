@@ -1,23 +1,46 @@
 <template>
-    <div v-html="this.blog">
 
+  <Transition>
+    <Animation style="width: 100vw; height: 100vh;" v-show="isShow"/>
+  </Transition>
+
+  <div v-show="!isShow" class="articleDetail-Main">
+    <!--导航栏-->
+    <el-affix :offset="0">
+      <Navbar class="navbar" style="background-color: white"/>
+    </el-affix>
+
+    <div class="article-Text">
+      <div v-html="this.article.articleContent"/>
     </div>
+
+  </div>
+
+
 </template>
 
 <script>
 import {marked} from 'marked'
+import Navbar from "@/components/front/Navbar.vue";
+import Animation from "@/components/shared/Animation.vue";
+import {queryArticle} from "@/api/article";
 
 export default {
   articleTitle: "ArticlesDetailView",
-  data(){
-    return{
-      blog: ''
+  components: {Navbar, Animation},
+  data() {
+    return {
+      article: {type: Object},
+      isShow: true,
     }
   },
   created() {
     this.getBlog()
   },
-  methods: { readFile(filePath) {
+  methods: {
+
+    //读取本地文件
+    readFile(filePath) {
       // 创建一个新的xhr对象
       let xhr = null
       if (window.XMLHttpRequest) {
@@ -32,13 +55,49 @@ export default {
       xhr.send(null)
       return xhr.status === okStatus ? xhr.responseText : null
     },
-    getBlog(){
-      this.blog = marked(this.readFile("/public/bolg/MySQL 安装配置.md"))
+
+    //获取文章信息
+    getBlog() {
+
+      //所要查询的文章Id
+      const articleId = this.$route.query.articleId;
+
+      //查询文章详细信息
+      queryArticle(articleId).then(res => {
+        console.log(res)
+        if (res.success) {
+          this.article = res.data
+          //加载动画
+          setTimeout(() => {
+            // 方法区
+            this.isShow = false
+          }, 1000);
+
+        } else {
+          console.log(res.message)
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+.navbar {
+  //背景阴影
+  box-shadow: var(--el-box-shadow-light);
+}
+
+.articleDetail-Main {
+  width: calc(100%);
+}
+
+.article-Text{
+  margin: 100px;
+  background-color: white;
+}
 
 </style>

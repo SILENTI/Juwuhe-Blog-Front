@@ -11,12 +11,12 @@ import ArticlesList from "@/components/back/ArticleList.vue";
 import Editor from "@/components/back/Editor.vue";
 import ClassifyLabel from "@/components/back/ClassifyLabel.vue";
 import Gallery from "@/components/back/Gallery.vue";
-import Guestbook from "@/views/front/Guestbook.vue";
+import Guestbook from "@/views/front/GuestbookView.vue";
 import NotFound from '@/views/other/NotFound.vue'
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL), routes: [
-        /*-------------------------------- 前台路由 --------------------------------*/
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: [/*-------------------------------- 前台路由 --------------------------------*/
         {
             path: '/', articleTitle: 'home', component: HomeViewFront,
         }, {
@@ -58,14 +58,14 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    console.log('请求地址:', to)
+    // console.log('请求地址:', to)
 
     //登录页面直接放行
     if (to.path == '/back/login') {
         next();
     } else if (to.matched != null && to.matched[0].path === '/back') {
         //后台系统要进行登录验证
-        console.log('==== 后台 ====')
+        // console.log('==== 后台 ====')
         if (localStorage.getItem('token') != null && localStorage.getItem('token') != '') {
             next();
         } else {
@@ -73,7 +73,7 @@ router.beforeEach((to, from, next) => {
         }
     } else {
         //前台页面直接放行
-        console.log('==== 前台 ====')
+        // console.log('==== 前台 ====')
         next();
     }
 })

@@ -12,12 +12,12 @@ export const service = axios.create({
 //请求拦截器
 service.interceptors.request.use(config =>{
 
-    console.log('请求拦截器-config：', config);
+    // console.log('请求拦截器-config：', config);
 
     return config;
 },error => {
 
-    console.log('请求拦截器-error：', error)
+    // console.log('请求拦截器-error：', error)
 
     return error;
 })

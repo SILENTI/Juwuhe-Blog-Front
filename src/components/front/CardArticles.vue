@@ -13,6 +13,7 @@
 
         <!--文章标题-->
         <h1>{{ article.articleTitle }}</h1>
+
         <!--文章描述-->
         <p >{{ article.articleDescription }}</p>
 
@@ -27,7 +28,7 @@
         <!--作者-->
         <a href=""><i class="iconfont icon-jurassic_user"/>居無何</a>
         <!--发布时间-->
-        <a href=""><i class="iconfont icon-shijian"/>{{ new Date(article.articleDate).toLocaleDateString() }}</a>
+        <a href=""><i class="iconfont icon-shijian"/>{{ article.articlePublishDate }}</a>
         <div>
           <i class="iconfont icon-tianchongxing-"/>
           <!--文章标签-->

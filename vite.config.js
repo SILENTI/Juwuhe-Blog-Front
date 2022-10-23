@@ -10,11 +10,14 @@ export default defineConfig({
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
-    }, server: {
+    },
+    server: {
         proxy: {
             '/api': {
                 target: 'http://localhost:11528', //跨域
-                changeOrigin: true, secure: false, rewrite: (path) => path.replace(/^\/api/, '/')
+                changeOrigin: true,
+                secure: false,
+                rewrite: (path) => path.replace(/^\/api/, '/')
             }
         }
     }

@@ -1,12 +1,14 @@
 <template>
-
+  <!--文本编辑器-->
   <div class="editor-main">
-    <md-editor-v3 v-model="articleForm.articleContent" style="height: 100%;"
-                  @on-html-changed="onHtmlChanged"
-                  @on-upload-img="onUploadImg"
-                  @on-save=" dialogVisible = true; getAllClassify(); getAllLabel(); "/>
+    <md-editor-v3
+        v-model="articleContent" style="height: 100%;"
+        @on-html-changed="onHtmlChanged"
+        @on-upload-img="onUploadImg"
+        @on-save=" dialogVisible = true; getAllClassify(); getAllLabel(); "/>
   </div>
 
+  <!--保存提示内容-->
   <el-dialog
       v-model="dialogVisible"
       title="详细内容"
@@ -95,17 +97,35 @@
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref} from 'vue';
+import {onMounted, reactive, ref} from 'vue';
 import type {UploadProps, UploadUserFile} from 'element-plus'
 import {ElNotification, ElTree} from 'element-plus'
 import MdEditorV3 from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import axios from "axios";
+import {useRouter} from "vue-router";
+import {htmlToText} from "html-to-text";
+import {saveArticle, saveEditArticle} from "/src/api/article.js";
+import {Notification} from "/src/utils/elUtils.js";
 
+/**工具函数类*/
+const router = useRouter();
+
+/**生命周期函数*/
+onMounted(() => {
+  getArticleUpdateInfo();
+})
 
 /**编辑器相关*/
+//文章内容
+const articleContent = ref('');
+
+//判断是否是编辑保存
+const changeArticleJudge = ref(false);
+
 //文章相关信息
-const articleForm = reactive({
+let articleForm = reactive({
+  articleId: '',
   articleTitle: '',
   articleDescription: '',
   articleImg: '',
@@ -113,12 +133,46 @@ const articleForm = reactive({
   classifyId: 0,
   labelList: []
 })
-//html代码
-const html = ref('');
+
+//文章编辑信息
+const getArticleUpdateInfo = () => {
+
+  if (router.currentRoute.value.params.article != undefined && router.currentRoute.value.params.article != null) {
+
+    //编辑文章信息判断
+    changeArticleJudge.value = true;
+
+    //传递的文章信息
+    let article = JSON.parse(<string>router.currentRoute.value.params.article);
+
+    console.log('article', article)
+
+    articleContent.value = htmlToText(article.articleContent);
+    articleForm.articleId = article.articleId;
+    articleForm.articleTitle = article.articleTitle;
+    articleForm.articleContent = article.articleContent;
+    articleForm.articleDescription = article.articleDescription;
+    articleForm.articleImg = article.articleImg;
+
+    //文章的分类信息和标签信息
+    if (article.classifyVO != null) {
+      articleForm.classifyId = article.classifyVO.classifyId;
+      classifyName.value = article.classifyVO.classifyName;
+    }
+
+    if (article.labelVOList != null) {
+      for (const labelListElement of article.labelVOList) {
+        articleForm.labelList.push(labelListElement.labelId)
+      }
+    }
+  }
+}
+
 //获取HTMl代码
 const onHtmlChanged = (h) => {
-  html.value = h
+  articleForm.articleContent = h;
 }
+
 //图片上传
 const onUploadImg = async (files, callback) => {
   const res = await Promise.all(
@@ -140,38 +194,51 @@ const onUploadImg = async (files, callback) => {
   );
   callback(res.map((item) => item.data.url));
 };
+
 //保存文章
 const onSave = () => {
 
-  console.log(articleForm.classifyId)
-
-  console.log("=== 保存事件 ===")
-  axios({
-    method: "post",
-    url: '/api/article/save',
-    data: articleForm
-  }).then((response) => {
-    console.log(response)
-    if (response.data.success) {
-      ElNotification({
-        articleTitle: 'Success',
-        message: response.data.message,
-        type: 'success'
-      })
-    } else {
+  //判断文章保存还是文章修改
+  if (changeArticleJudge) {
+    console.log("=== 编辑事件 ===");
+    saveEditArticle(articleForm).then(res => {
+      if (res.success) {
+        Notification("success", "保存成功");
+      } else {
+        Notification("error", "保存失败");
+      }
+    }).catch(error => {
+      Notification("error", error.message);
+    })
+  } else {
+    console.log("=== 保存事件 ===");
+    axios({
+      method: "post",
+      url: '/api/article/save',
+      data: articleForm
+    }).then((response) => {
+      console.log(response)
+      if (response.data.success) {
+        ElNotification({
+          articleTitle: 'Success',
+          message: response.data.message,
+          type: 'success'
+        })
+      } else {
+        ElNotification({
+          articleTitle: 'Error',
+          message: response.data.message,
+          type: 'error',
+        })
+      }
+    }).catch((error) => {
       ElNotification({
         articleTitle: 'Error',
-        message: response.data.message,
+        message: error.message,
         type: 'error',
       })
-    }
-  }).catch((error) => {
-    ElNotification({
-      articleTitle: 'Error',
-      message: error.message,
-      type: 'error',
     })
-  })
+  }
 }
 
 /**对话框-判断值*/
@@ -224,7 +291,7 @@ const getAllLabel = () => {
       //操作成功！！！
       options.value = res.data.data
     } else {
-
+      console.log(res.message)
     }
   }).catch((error) => {
     console.log(error)
@@ -287,10 +354,7 @@ const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
 const handlePreview: UploadProps['onPreview'] = (file) => {
   console.log(file)
 }
-//图库选择
-const getGalleryImg = () => {
-  console.log('============================================================================')
-}
+
 
 </script>
 

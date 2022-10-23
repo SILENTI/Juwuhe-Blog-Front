@@ -11,7 +11,7 @@
     </el-affix>
 
     <div class="article-Text">
-      <div v-html="this.article.articleContent"/>
+      <div class="article-Text-Html" v-html="this.article.articleContent"/>
     </div>
 
   </div>
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import {marked} from 'marked'
 import Navbar from "@/components/front/Navbar.vue";
 import Animation from "@/components/shared/Animation.vue";
 import {queryArticle} from "@/api/article";
@@ -87,7 +86,6 @@ export default {
 <style lang="scss" scoped>
 
 .navbar {
-  //背景阴影
   box-shadow: var(--el-box-shadow-light);
 }
 
@@ -95,9 +93,13 @@ export default {
   width: calc(100%);
 }
 
-.article-Text{
+.article-Text {
   margin: 100px;
   background-color: white;
+}
+
+.article-Text-Html {
+
 }
 
 </style>

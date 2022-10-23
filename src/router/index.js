@@ -15,42 +15,41 @@ import Guestbook from "@/views/front/GuestbookView.vue";
 import NotFound from '@/views/other/NotFound.vue'
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
-    routes: [/*-------------------------------- 前台路由 --------------------------------*/
+    history: createWebHistory(import.meta.env.BASE_URL), routes: [/*-------------------------------- 前台路由 --------------------------------*/
         {
-            path: '/', articleTitle: 'home', component: HomeViewFront,
+            path: '/', name: 'home', component: HomeViewFront,
         }, {
-            path: "/404", articleTitle: '404-error', component: NotFound,
+            path: "/404", name: '404-error', component: NotFound,
         }, {
-            path: '/front', articleTitle: 'front', children: [{
-                path: 'home', articleTitle: 'front-home', component: HomeViewFront,
+            path: '/front', name: 'front', children: [{
+                path: 'home', name: 'front-home', component: HomeViewFront,
             }, {
-                path: 'tag', articleTitle: 'front-tag', component: TagViewFront
+                path: 'tag', name: 'front-tag', component: TagViewFront
             }, {
-                path: 'classify', articleTitle: 'front-classify', component: ClassificationFront,
+                path: 'classify', name: 'front-classify', component: ClassificationFront,
             }, {
-                path: 'axis', articleTitle: 'front-axis', component: AxisViewFront
+                path: 'axis', name: 'front-axis', component: AxisViewFront
             }, {
-                path: 'guestbook', articleTitle: 'front-guestbook', component: Guestbook
+                path: 'guestbook', name: 'front-guestbook', component: Guestbook
             }, {
-                path: 'about', articleTitle: 'front-about', component: AboutViewFront
+                path: 'about', name: 'front-about', component: AboutViewFront
             }, {
-                path: 'articlesDetail', articleTitle: 'front-articlesDetail', component: ArticlesDetailView
+                path: 'articlesDetail', name: 'front-articlesDetail', component: ArticlesDetailView
             },]
         }, /*-------------------------------- 后台路由 --------------------------------*/
         {
-            path: '/back', articleTitle: 'back', children: [{
-                path: 'home', articleTitle: 'back-home', component: HomeViewBack, children: [{
-                    path: 'articlesList', articleTitle: "ArticlesList", component: ArticlesList
+            path: '/back', name: 'back', children: [{
+                path: 'home', name: 'back-home', component: HomeViewBack, children: [{
+                    path: 'articlesList', name: "ArticlesList", component: ArticlesList
                 }, {
-                    path: 'editor', articleTitle: 'editor', component: Editor
+                    path: 'editor', name: 'editor', component: Editor
                 }, {
-                    path: 'classifyLabel', articleTitle: 'classifyLabel', component: ClassifyLabel
+                    path: 'classifyLabel', name: 'classifyLabel', component: ClassifyLabel
                 }, {
-                    path: 'gallery', articleTitle: 'gallery', component: Gallery
+                    path: 'gallery', name: 'gallery', component: Gallery
                 }]
             }, {
-                path: 'login', articleTitle: 'back-login', component: LoginViewBack
+                path: 'login', name: 'back-login', component: LoginViewBack
             }]
         }, {
             path: '/:catchAll(.*)', redirect: '/404'

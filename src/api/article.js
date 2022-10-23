@@ -12,7 +12,7 @@ export function queryArticlesPage(data) {
 }
 
 /**
- * 查询文章的详细信息
+ * 前台-查询文章的详细信息
  */
 export function queryArticle(articleId){
     return request({
@@ -24,12 +24,13 @@ export function queryArticle(articleId){
     })
 }
 
+
 /**
  * 根据标签Id查询博文信息
  * */
 export function queryArticlesByLabelId(data) {
     return request({
-        url: '/article/queryArticlesLabel',
+        url: '/article/queryLabel',
         method: 'post',
         data: data
     })
@@ -43,6 +44,17 @@ export function saveArticle(data) {
         url: '/article/save',
         method: 'post',
         data: data
+    })
+}
+
+/**
+ * 保存编辑事件
+ */
+export function saveEditArticle(data) {
+    return request({
+        url: '/article/saveEdit',
+        method: 'post',
+        data: data,
     })
 }
 

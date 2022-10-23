@@ -71,7 +71,7 @@
         </div>
 
         <!--编辑-->
-        <el-button type="warning">编辑</el-button>
+        <el-button type="warning" @click="articleEdit(article.articleId)">编辑</el-button>
 
         <!--删除-->
         <el-button type="danger" @click="removeArticle(article.articleId)">删除</el-button>
@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import {queryArticlesPage, publishAction, removeArticle} from "@/api/article";
+import {queryArticlesPage, publishAction, removeArticle, queryArticle} from "@/api/article";
 import {ElMessage, ElMessageBox} from 'element-plus'
 import Pagination from "@/components/shared/Pagination.vue";
 import Animation from "@/components/shared/Animation.vue";
@@ -167,6 +167,26 @@ export default {
       }).catch(error => {
         console.log(error)
       });
+    },
+
+    //文章编辑
+    articleEdit(articleId) {
+      queryArticle(articleId).then(res => {
+        if (res.success) {
+          console.log(res)
+          this.$router.push({
+            name: 'editor',
+            params: {
+              article: JSON.stringify(res.data)
+            }
+          })
+        } else {
+          Notification('error', '编辑失败');
+        }
+      }).catch(error => {
+        Notification('error', error.messages);
+      })
+
     },
 
     //分页页码切换

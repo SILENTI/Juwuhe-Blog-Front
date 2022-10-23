@@ -6,16 +6,28 @@
 
   <!--标签页-->
   <div class="main-tag">
-    <el-button class="button" v-on:click="this.queryAllByLabelId(label.labelId)" v-for="label in labelList" type="primary">{{label.labelName}}</el-button>
+    <el-button-group v-for="(label, index) in labelList" style="margin: 10px;">
+      <el-button
+          size="small"
+          :key="label.labelId"
+          :type="this.randomNumType()"
+          @click="this.queryAllByLabelId(label.labelId)"
+      >{{ label.labelName }}
+      </el-button>
+    </el-button-group>
   </div>
 
+
   <div class="main-content">
+
     <!--页面展示-->
     <CardArticles v-bind:article-list="this.articlesList"/>
+
     <!--分页-->
-    <div class="page">
-      <Pagination v-model:page="page"/>
+    <div class="page" v-show="!isQueryLabel">
+      <Pagination v-model:page="page" @pageChange="handleCurrentChange"/>
     </div>
+
   </div>
 </template>
 
@@ -40,7 +52,11 @@ export default {
       //标签数组
       labelList: [],
       //博文数组
-      articlesList: []
+      articlesList: [],
+      isQueryLabel: false,
+      //标签颜色
+      labelType: ['primary', 'success', 'info', 'warning', 'danger'],
+
     };
   },
   created() {
@@ -51,22 +67,24 @@ export default {
     /*切换页码*/
     handleCurrentChange(val) {
       this.page.pageNum = val;
+      this.queryAllArticles(this.page);
     },
     /*获取所有的文章*/
-    queryAllArticles(page){
-      queryArticlesPage(page).then(response =>{
+    queryAllArticles(page) {
+      queryArticlesPage(page).then(response => {
         console.log("--------------------")
         console.log(response)
-        if (response.success){
+        if (response.success) {
           this.page.total = response.data.total
           this.articlesList = response.data.list
-        }else {
+        } else {
           console.log("查询失败：" + response.message)
         }
-      }).catch(error =>{
+      }).catch(error => {
         console.log("查询失败：" + error.message)
       })
     },
+
     /*查询所有的标签信息*/
     queryAllTage() {
       queryAllLabel().then(response => {
@@ -81,6 +99,7 @@ export default {
         console.log(error.message)
       })
     },
+
     /*根据标签的ID，查询文章的信息*/
     queryAllByLabelId(labelId) {
       queryArticlesByLabelId({
@@ -89,15 +108,21 @@ export default {
         console.log(response)
         if (response.success) {
           console.log(response.data)
-          this.articlesList = response.data
+          this.isQueryLabel = true;
+          this.articlesList = response.data;
         } else {
-          console.log("操作失败："+response.message)
+          console.log("操作失败：" + response.message)
         }
       }).catch(error => {
-        console.log("失败："+error)
+        console.log("失败：" + error)
       })
+    },
+
+    randomNumType() {
+      let num = Math.floor(Math.random() * (4 - 0 + 1)) + 0
+      return this.labelType.at(num)
     }
-  }
+  },
 }
 </script>
 

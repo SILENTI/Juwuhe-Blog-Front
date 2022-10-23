@@ -2,10 +2,9 @@
 
   <div class="guestbook">
 
+    <!--导航栏-->
     <div>
-      <!--导航栏-->
       <Navbar class="navbar" style="background-color: white"/>
-
     </div>
 
     <div class="message-main">
